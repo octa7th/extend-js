@@ -2,6 +2,9 @@ var is = {
 	func: function (value) {
 		return typeof value === 'function';
 	},
+	number: function (value) {
+		return typeof value === 'number';
+	},
 	string: function (value) {
 		return typeof value === 'string';
 	},
@@ -77,6 +80,11 @@ RegExp.method('test', function (string) {
 
 String.method('trim', function () {
 	return this.replace(/^\s+|\s+$/g, '');
+});
+
+String.method('toInt', function (radix) {
+	radix = is.number(radix) ? radix : 10;
+	return parseInt(this, radix);
 });
 
 

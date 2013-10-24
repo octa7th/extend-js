@@ -50,8 +50,18 @@ Object.method('forEach', function (handler) {
 
 	for(k in this) {
 		if(this.hasOwnProperty(k)) {
-			if(is.func(handler)) handler.apply(this, [k, this[k]]);
+			if(is.func(handler)) handler.apply(this, [this[k], k]);
 		}
+	}
+
+	return this;
+});
+
+Array.method('forEach', function (handler) {
+	var i, len = this.length;
+
+	for (i = 0; i < len; i++) {
+		if(is.func(handler)) handler.apply(this, [this[i], i]);
 	}
 
 	return this;

@@ -41,6 +41,19 @@ Function.method('bind', function (that) {
 	};
 });
 
+Function.method('delay', function (delay) {
+	delay = is.number(delay) ? delay : 1000;
+	var timeOut = 0;
+	var that = this;
+	return function() {
+		var args = Array.prototype.slice.apply(arguments);
+		clearTimeout(timeOut);
+		timeOut = setTimeout(function () {
+			that.apply(null, args);
+		}, delay);
+	};
+});
+
 Object.method('create', function (obj) {
 	var Func = function () {};
 

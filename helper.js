@@ -26,33 +26,6 @@ Function.prototype.method = function (name, func) {
 	}
 };
 
-Object.method('forEach', function (handler) {
-	var k;
-
-	for(k in this) {
-		if(this.hasOwnProperty(k)) {
-			if(is.func(handler)) handler.apply(this, [k, this[k]]);
-		}
-	}
-
-	return this;
-});
-
-Object.method('create', function (obj) {
-	var Func = function () {};
-
-	Func.prototype = obj;
-	return new Func();
-});
-
-Number.method('integer', function () {
-	return Math[this < 0 ? 'ceil' : 'floor'](this);
-});
-
-String.method('trim', function () {
-	return this.replace(/^\s+|\s+$/g, '');
-});
-
 Function.method('bind', function (that) {
 	var method = this,
 		slice = Array.prototype.slice,
@@ -65,9 +38,37 @@ Function.method('bind', function (that) {
 	};
 });
 
+Object.method('create', function (obj) {
+	var Func = function () {};
+
+	Func.prototype = obj;
+	return new Func();
+});
+
+Object.method('forEach', function (handler) {
+	var k;
+
+	for(k in this) {
+		if(this.hasOwnProperty(k)) {
+			if(is.func(handler)) handler.apply(this, [k, this[k]]);
+		}
+	}
+
+	return this;
+});
+
+Number.method('integer', function () {
+	return Math[this < 0 ? 'ceil' : 'floor'](this);
+});
+
 RegExp.method('test', function (string) {
 	return this.exec(string) !== null;
 });
+
+String.method('trim', function () {
+	return this.replace(/^\s+|\s+$/g, '');
+});
+
 
 var by = function (name) {
 	var minor, order, caseSensitive;
